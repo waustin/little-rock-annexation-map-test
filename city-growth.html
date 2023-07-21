@@ -20641,7 +20641,11 @@
 
       function onEachJsonFeature(feature, layer) {
         const featureTitle = `${feature.properties.name} - ${feature.properties.year}`;
-        layer.bindTooltip(featureTitle);
+        layer.bindTooltip(featureTitle, {
+          sticky: true,
+          direction: "top",
+          offset: [0, -2],
+        });
         layer.on("mouseover", function () {
           // hovering on layer
           this.setStyle({
