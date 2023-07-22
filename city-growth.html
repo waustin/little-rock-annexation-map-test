@@ -20641,19 +20641,36 @@
 
       function onEachJsonFeature(feature, layer) {
         const featureTitle = `${feature.properties.name} - ${feature.properties.year}`;
+        const featureStyle = {
+          fillColor: "#0000FF",
+          fillOpacity: 0.3,
+          weight: 1,
+          color: "#0000AA",
+        };
+        const featureHoverStyle = {
+          fillColor: "#00ff00",
+          color: "#FF0000",
+          weight: 1,
+          color: "white",
+          fillOpacity: 0.3,
+        };
+
+        layer.setStyle(featureStyle);
         layer.bindTooltip(featureTitle, {
           sticky: true,
           direction: "top",
           offset: [0, -2],
         });
+        const layerOgStyle = {};
+
         layer.on("mouseover", function () {
           // hovering on layer
-          this.setStyle({
-            //fillColor: "#0000ff",
-          });
+          //layerOgStyle = this.getStyle();
+          this.setStyle(featureHoverStyle);
         });
         layer.on("mouseout", function () {
           // not hovering on layer
+          this.setStyle(featureStyle);
         });
         if (feature.properties && feature.properties.name) {
           layer.bindPopup(featureTitle);
