@@ -20640,7 +20640,6 @@
       ).addTo(map);
 
       function onEachJsonFeature(feature, layer) {
-        const featureTitle = `${feature.properties.name} - ${feature.properties.year}`;
         const featureStyle = {
           fillColor: "#0000FF",
           fillOpacity: 0.3,
@@ -20656,12 +20655,6 @@
         };
 
         layer.setStyle(featureStyle);
-        layer.bindTooltip(featureTitle, {
-          sticky: true,
-          direction: "top",
-          offset: [0, -2],
-        });
-        const layerOgStyle = {};
 
         layer.on("mouseover", function () {
           // hovering on layer
@@ -20673,10 +20666,17 @@
           this.setStyle(featureStyle);
         });
         if (feature.properties && feature.properties.name) {
-          layer.bindPopup(featureTitle);
           // feature.properies.ordinance_link
           // feature.properties.ordinance_date
           // feature.properties.year
+          const featureTitle = `${feature.properties.name} - ${feature.properties.year}`;
+          layer.bindTooltip(featureTitle, {
+            sticky: true,
+            direction: "top",
+            offset: [0, -2],
+          });
+          const popupHTML = `<a href="${feature.properties.ordinance_link}" target="_blank">${featureTitle}</a>`;
+          layer.bindPopup(popupHTML);
         }
       }
 
